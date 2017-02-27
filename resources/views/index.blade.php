@@ -63,6 +63,10 @@ Trending quotes
                 <input type="text" name="author" id="author" placeholder="Your Name">
             </div>
             <div class="input-group">
+                <label for="email">Your email</label>
+                <input type="email" name="email" id="email" placeholder="Your email">
+            </div>
+            <div class="input-group">
                 <label for="quote">Your quote</label>
                 <textarea name="quote" id="quote" placeholder="Quote" rows="5"></textarea>
                 <button type="submit" class="btn">submit Quote</button>

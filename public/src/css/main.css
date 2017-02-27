@@ -95,7 +95,7 @@ body {
     padding: 4px 8px;
 }
 
-.input-group #author {
+.input-group #author,.input-group #email {
     width: 200px;
 }
 

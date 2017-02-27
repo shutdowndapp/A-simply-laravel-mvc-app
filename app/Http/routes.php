@@ -30,3 +30,8 @@ Route::get('/profile/{author_id}',[
     'uses' => 'QuoteController@getProfileAuthor',
     'as' => 'profile'
 ]);
+
+Route::get('/gotemail/{author_name}',[
+    'uses' => 'QuoteController@getMailCallback',
+    'as' => 'mail_callback'
+]);

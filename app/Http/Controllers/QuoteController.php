@@ -10,6 +10,12 @@ use App\Author;
 
 use App\Quote;
 
+use App\AuthorLog;
+
+use Event;
+
+use App\Events\QuoteCreated;
+
 class QuoteController extends Controller
 {
     public function getIndex($author = null)
@@ -47,7 +53,8 @@ class QuoteController extends Controller
     {
         $this->validate($request,[
             'author' => 'required|max:60',
-            'quote' => 'required|max:500'
+            'quote' => 'required|max:500',
+            'email' => 'required|email'
         ]);
 
         $authorText = ucfirst(strtolower($request->author));
@@ -59,12 +66,16 @@ class QuoteController extends Controller
             // 存储该author
             $author = new Author();
             $author->name  = $authorText;
+            $author->email = $request->email;
             $author->save();
         }
         // 将 $quoteText 存储少quotes
         $quote = new Quote();
         $quote->quote = $quoteText;
         $author->quotes()->save($quote);
+        // add Event and Listener
+        Event::fire(new QuoteCreated($author));
+
         // 链式调用回所保存的session内容 
         return redirect()->route('index')->with([
             'success' => 'Quote saved!'
@@ -75,5 +86,14 @@ class QuoteController extends Controller
     {
         $quotes = Author::find($author_id)->quotes()->paginate(6);
         return view('index',compact('quotes'));
+    }
+
+    public function getMailCallback($author_name)
+    {
+        $author_log = new AuthorLog();
+        $author_log->author = $author_name;
+        $author_log->save();
+        
+        return view('email.callback',['author' => $author_name]);
     }
 }
