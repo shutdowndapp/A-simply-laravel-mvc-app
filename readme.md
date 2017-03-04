@@ -1,6 +1,8 @@
 # simple laravel 5.2 mvc 
 > Just an exercise 
 
+[演示demo](http://laravel.520world.com)
+
 - 基础路由
 - 请求响应
 - 视图Blade模板
